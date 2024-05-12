@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import mapboxgl from "mapbox-gl";
 import portData from "../../Data/portData.json";
 import "mapbox-gl/dist/mapbox-gl.css";
-import TimePort from "../time_port/TimePort"; // Import the Time_Zone component
+import TimePort from "../time_port/TimePort"; // Import the TimePort component
 import tzlookup from "tz-lookup";
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
@@ -12,7 +12,7 @@ const Map = () => {
   useEffect(() => {
     const map = new mapboxgl.Map({
       container: "map",
-      style: "mapbox://styles/mapbox/dark-v10",
+      style: "mapbox://styles/mapbox/light-v10",
       center: [0, 0],
       zoom: 2,
       minZoom: 2,
@@ -50,7 +50,27 @@ const Map = () => {
         .addTo(map);
     });
 
-    return () => map.remove();
+    // Update map style based on time of day
+    const updateMapStyle = () => {
+      const currentHour = new Date().getHours();
+      if (currentHour >= 6 && currentHour < 18) {
+        map.setStyle("mapbox://styles/mapbox/navigation-day-v1");
+      } else {
+        map.setStyle("mapbox://styles/mapbox/navigation-night-v1");
+      }
+    };
+
+    // Call updateMapStyle initially
+    updateMapStyle();
+
+    // Update map style every minute
+    const intervalId = setInterval(updateMapStyle, 60000);
+
+    // Cleanup function
+    return () => {
+      clearInterval(intervalId);
+      map.remove();
+    };
   }, []);
 
   return (
