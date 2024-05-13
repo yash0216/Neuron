@@ -93,9 +93,18 @@ const Map = () => {
 
       // Create a popup for the searched port
       const popupContent = document.createElement("div");
+      const timezone = tzlookup(
+        searchedPort.geo_location_latitude,
+        searchedPort.geo_location_longitude
+      );
       ReactDOM.render(
         <div>
           <h3>{searchedPort.port_name}</h3>
+          <p>Timezone: {timezone}</p>
+          <TimePort
+            latitude={searchedPort.geo_location_latitude}
+            longitude={searchedPort.geo_location_longitude}
+          />
           {/* Add more information about the port as needed */}
         </div>,
         popupContent
