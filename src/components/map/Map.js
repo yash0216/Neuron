@@ -157,6 +157,11 @@ const Map = () => {
           {/* Add more information about the port as needed */}
         </div>
       )}
+      <footer
+        style={{ textAlign: "center", marginTop: "20px", color: "white" }}
+      >
+        Copyright © 2024 Created by Yash Pandey
+      </footer>
     </div>
   );
 };
