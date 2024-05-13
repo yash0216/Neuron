@@ -131,7 +131,7 @@ const Map = () => {
       });
     } else {
       // If no port is found, display a message or handle it as per your requirement
-      console.log("No port found with that name");
+      alert("No port found with that name");
     }
   };
 
